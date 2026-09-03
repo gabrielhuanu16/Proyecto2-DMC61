@@ -30,4 +30,6 @@ if modulo == "Home":
   - GitHub
   - NumPy
   - Pandas
+  - Matplotlib
+  - Seaborn
   """)
