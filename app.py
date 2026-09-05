@@ -213,4 +213,22 @@ elif modulo == "EDA":
       st.write(len(df_filtrado))
       st.write("**Gráfico de la variable seleccionada:**")
       st.bar_chart(df_filtrado[variable].value_counts().sort_index())
-    
+        
+    with tab10:
+      st.subheader("Ítem 10: Hallazgos clave")
+      st.write("En este apartado se presentan los principales hallazgos obtenidos durante el análisis exploratorio del dataset.")
+      st.write("**1. Uso de redes sociales**")
+      promedio_redes = df["daily_social_media_hours"].mean()
+      st.write(f"El promedio de uso diario de redes sociales es de {promedio_redes:.2f} horas.")
+      st.write("**2. Horas de sueño**")
+      promedio_sueno = df["sleep_hours"].mean()
+      st.write(f"El promedio de horas de sueño es de {promedio_sueno:.2f} horas por día.")
+      st.write("**3. Rendimiento académico**")
+      promedio_academico = df["academic_performance"].mean()
+      st.write( f"El promedio del rendimiento académico es de {promedio_academico:.2f}.")
+      st.write("**4. Nivel de estrés**")
+      promedio_estres = df["stress_level"].mean()
+      st.write( f"El nivel promedio de estrés registrado es de {promedio_estres:.2f} sobre 10.")
+      st.write("**5. Plataforma más utilizada**")
+      plataforma_mas_usada = df["platform_usage"].value_counts().idxmax()
+      st.write( f"La plataforma o combinación de plataformas con mayor frecuencia es: {plataforma_mas_usada}.")
