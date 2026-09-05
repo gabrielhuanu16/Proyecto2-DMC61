@@ -157,5 +157,17 @@ elif modulo == "EDA":
       st.write("**Gráfico de frecuencias:**")
       st.bar_chart(conteo.set_index("Categoría"))
 
+    with tab7:
+      st.subheader("Ítem 7: Numérico vs categórico")
+      st.write("En este apartado se comparan variables numéricas según las categorías de depression_label.")
+      variables_numericas = df.select_dtypes(include="number").columns
+      variable = st.selectbox("Seleccione una variable numérica:",variables_numericas)
+      st.write("**Comparación de", variable, "según depression_label:**")
+      fig, ax = plt.subplots()
+      sns.boxplot(data=df,x="depression_label",y=variable,ax=ax)
+      ax.set_xlabel("Depression Label")
+      ax.set_ylabel(variable)
+      st.pyplot(fig)
+
 
     
