@@ -145,5 +145,17 @@ elif modulo == "EDA":
       ax.set_ylabel("Frecuencia")
       st.pyplot(fig)
 
+    with tab6:
+      st.subheader("Ítem 6: Variables categóricas")
+      st.write("En este apartado se analiza la frecuencia de las variables categóricas mediante tablas y gráficos.")
+      variables_categoricas = df.select_dtypes(include="object").columns
+      variable = st.selectbox("Seleccione una variable categórica:",variables_categoricas)
+      conteo = df[variable].value_counts().reset_index()
+      conteo.columns = ["Categoría", "Cantidad"]
+      st.write("**Frecuencia de las categorías:**")
+      st.dataframe(conteo)
+      st.write("**Gráfico de frecuencias:**")
+      st.bar_chart(conteo.set_index("Categoría"))
+
 
     
