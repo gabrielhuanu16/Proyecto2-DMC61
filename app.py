@@ -8,8 +8,11 @@ st.sidebar.image("DMC_logo.png", width=100)
 modulo = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga del Dataset", "EDA"])
 
 def clasificar_variables(df):
-    variables_numericas = df.select_dtypes(include="number").columns
-    variables_categoricas = df.select_dtypes(include="object").columns
+    variables_numericas = df.select_dtypes(include="number").columns.tolist()
+    variables_categoricas = df.select_dtypes(include="object").columns.tolist()
+    if "depression_label" in variables_numericas:
+        variables_numericas.remove("depression_label")
+        variables_categoricas.append("depression_label")
     return variables_numericas, variables_categoricas
 
 class AnalizadorDatos:
