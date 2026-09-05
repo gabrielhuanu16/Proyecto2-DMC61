@@ -41,6 +41,7 @@ elif modulo == "Carga del Dataset":
   archivo = st.file_uploader("Cargar Teen_Mental_Health_Dataset.csv",type=["csv"])
   if archivo is not None:
     df = pd.read_csv(archivo)
+    st.session_state.df = df
     st.success("Archivo cargado correctamente")
     st.write("Vista previa del dataset")
     st.dataframe(df.head())
