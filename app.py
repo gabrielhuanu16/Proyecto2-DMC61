@@ -52,4 +52,23 @@ elif modulo == "EDA":
   st.title("EDA")
   st.divider()
   tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs(["Información general","Clasificación","Estadísticas","Valores faltantes","Distribuciones","Variables categóricas","Numérico vs categórico","Categórico vs categórico","Análisis dinámico","Hallazgos clave"])
-    
+  if "df" not in st.session_state:
+        st.warning("Primero debe cargar el dataset.")
+    else:
+        df = st.session_state.df
+
+        tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs([
+            "Información general",
+            "Clasificación",
+            "Estadísticas",
+            "Valores faltantes",
+            "Distribuciones",
+            "Variables categóricas",
+            "Numérico vs categórico",
+            "Categórico vs categórico",
+            "Análisis dinámico",
+            "Hallazgos clave"
+        ])
+
+        with tab1:
+            st.write("Aquí irá el Ítem 1")  
