@@ -116,3 +116,18 @@ elif modulo == "EDA":
       conteo_outliers = outliers.reset_index()
       conteo_outliers.columns = ["Variable", "Cantidad de outliers"]
       st.dataframe(conteo_outliers)
+    with tab4:
+      st.subheader("Ítem 4: Valores faltantes")
+      st.write("En este apartado se identifican los valores faltantes del dataset y se muestra su porcentaje por variable.")
+      valores_nulos = df.isnull().sum()
+      porcentaje_nulos = (df.isnull().sum() / len(df)) * 100
+      tabla_nulos = pd.DataFrame({"Variable": df.columns,"Valores nulos": valores_nulos,"Porcentaje (%)": porcentaje_nulos})
+      st.dataframe(tabla_nulos)
+      st.write("**Valores nulos por variable:**")
+      st.bar_chart(valores_nulos)
+      if valores_nulos.sum() == 0:
+          st.success("El dataset no presenta valores faltantes.")
+      else:
+          st.warning("El dataset presenta valores faltantes que deben ser revisados.")
+    
+    
