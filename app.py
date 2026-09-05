@@ -3,7 +3,7 @@ import pandas as pd
 
 st.sidebar.title("Secciones")
 st.sidebar.image("DMC_logo.png", width=100)
-modulo = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga del Dataset"])
+modulo = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga del Dataset", "EDA"])
 if modulo == "Home":
   st.title("Modulo 2 - Análisis Exploratorio de Datos sobre Salud Mental en Adolescentes")
   st.image("gabriel_logo.png", width=200)
@@ -48,5 +48,7 @@ elif modulo == "Carga del Dataset":
     st.write("Cantidad de columnas:", df.shape[1])
   else:
     st.warning("Debe cargar el archivo CSV")
+elif modulo == "EDA"
   tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs(["Información general","Clasificación","Estadísticas","Valores faltantes","Distribuciones","Variables categóricas","Numérico vs categórico","Categórico vs categórico","Análisis dinámico","Hallazgos clave"])
+  with tab1:
     
