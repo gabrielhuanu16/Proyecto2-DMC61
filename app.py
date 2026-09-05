@@ -12,6 +12,16 @@ def clasificar_variables(df):
     variables_categoricas = df.select_dtypes(include="object").columns
     return variables_numericas, variables_categoricas
 
+class AnalizadorDatos:
+    def __init__(self, df):
+        self.df = df
+    def estadisticas(self):
+        return self.df.describe()
+    def valores_nulos(self):
+        return self.df.isnull().sum()
+    def duplicados(self):
+        return self.df.duplicated().sum()
+
 if modulo == "Home":
   st.title("Modulo 2 - Análisis Exploratorio de Datos sobre Salud Mental en Adolescentes")
   st.image("gabriel_logo.png", width=200)
@@ -66,6 +76,7 @@ elif modulo == "EDA":
     st.warning("Primero debe cargar el dataset.")
   else:
     df = st.session_state.df
+    analizador = AnalizadorDatos(df)
     tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs([
           "Información general",
           "Clasificación",
@@ -87,11 +98,11 @@ elif modulo == "EDA":
       tipos = pd.DataFrame({"Tipo de dato": df.dtypes.astype(str)})
       st.dataframe(tipos)
       st.write("**Valores nulos:**")
-      nulos = pd.DataFrame({"Valores nulos": df.isnull().sum()})
+      nulos = pd.DataFrame({"Valores nulos": analizador.valores_nulos()})
       st.dataframe(nulos)
       st.write("**Registros duplicados:**")
-      st.write(df.duplicated().sum())
-  
+      st.write(analizador.duplicados())
+          
     with tab2:
       st.subheader("Ítem 2: Clasificación de variables")
       st.write("En este apartado se clasifican las variables del dataset en numéricas y categóricas.")
@@ -106,7 +117,7 @@ elif modulo == "EDA":
     with tab3:
       st.subheader("Ítem 3: Estadísticas descriptivas")
       st.write("En este apartado se presentan las principales estadísticas descriptivas de las variables numéricas del dataset.")
-      estadisticas = df.describe()
+      estadisticas = analizador.estadisticas()
       st.dataframe(estadisticas)
       st.write("**Detección preliminar de valores atípicos:**")
       Q1 = df.quantile(0.25, numeric_only=True)
