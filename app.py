@@ -99,4 +99,20 @@ elif modulo == "EDA":
       conteo_tipos.columns = ["Tipo de variable", "Cantidad"]
       st.dataframe(tipos_variables)
       st.write("**Cantidad de variables por tipo:**")
-      st.dataframe(conteo_tipos)  
+      st.dataframe(conteo_tipos) 
+        
+    with tab3:
+      st.subheader("Ítem 3: Estadísticas descriptivas")
+      st.write("En este apartado se presentan las principales estadísticas descriptivas de las variables numéricas del dataset.")
+      estadisticas = df.describe()
+      st.dataframe(estadisticas)
+      st.write("**Detección preliminar de valores atípicos:**")
+      Q1 = df.quantile(0.25, numeric_only=True)
+      Q3 = df.quantile(0.75, numeric_only=True)
+      IQR = Q3 - Q1
+      limite_inferior = Q1 - 1.5 * IQR
+      limite_superior = Q3 + 1.5 * IQR
+      outliers = ((df.select_dtypes(include="number") < limite_inferior) | (df.select_dtypes(include="number") > limite_superior)).sum()
+      conteo_outliers = outliers.reset_index()
+      conteo_outliers.columns = ["Variable", "Cantidad de outliers"]
+      st.dataframe(conteo_outliers)
