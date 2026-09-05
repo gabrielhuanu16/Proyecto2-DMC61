@@ -35,7 +35,17 @@ if modulo == "Home":
   - Seaborn
   """)
 elif modulo == "Carga del Dataset":
-    st.title("Carga del Dataset")
-    st.divider()
-    st.write("**Seleccione el archivo CSV que desea analizar:**")
-    archivo = st.file_uploader("Cargar Teen_Mental_Health_Dataset.csv",type=["csv"])
+  st.title("Carga del Dataset")
+  st.divider()
+  st.write("**Seleccione el archivo CSV que desea analizar:**")
+  archivo = st.file_uploader("Cargar Teen_Mental_Health_Dataset.csv",type=["csv"])
+  if archivo is not None:
+    df = pd.read_csv(archivo)
+    st.success("Archivo cargado correctamente")
+    st.write("Vista previa del dataset")
+    st.dataframe(df.head())
+    st.write("Cantidad de filas:", df.shape[0])
+    st.write("Cantidad de columnas:", df.shape[1])
+  else:
+    st.warning("Debe cargar el archivo CSV")
+    
