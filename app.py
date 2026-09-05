@@ -106,7 +106,7 @@ elif modulo == "EDA":
       st.write("**Registros duplicados:**")
       st.write(analizador.duplicados())
           
-  with tab2:
+   with tab2:
       st.subheader("Ítem 2: Clasificación de variables")
       st.write("En este apartado se clasifican las variables del dataset en numéricas y categóricas.")
       variables_numericas, variables_categoricas = clasificar_variables(df)
