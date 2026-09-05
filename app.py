@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 st.sidebar.title("Secciones")
 st.sidebar.image("DMC_logo.png", width=100)
@@ -33,3 +34,8 @@ if modulo == "Home":
   - Matplotlib
   - Seaborn
   """)
+elif modulo == "Carga del Dataset":
+    st.title("Carga del Dataset")
+    st.divider()
+    st.write("**Seleccione el archivo CSV que desea analizar:**")
+    archivo = st.file_uploader("Cargar Teen_Mental_Health_Dataset.csv",type=["csv"])
