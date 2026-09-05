@@ -135,11 +135,11 @@ streamlit run app.py
 
 Repositorio de GitHub:
 
-PEGAR AQUI EL LINK DE GITHUB
+(https://github.com/gabrielhuanu16/Proyecto2-DMC61.git)
 
 Aplicación en Streamlit Cloud:
 
-PEGAR AQUI EL LINK DE STREAMLIT
+(https://proyecto2-dmc61-2pw7qdtfgbz4uuty8appx4.streamlit.app/)
 
 ## Autor
 
