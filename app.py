@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 st.sidebar.title("Secciones")
 st.sidebar.image("DMC_logo.png", width=100)
@@ -116,6 +118,7 @@ elif modulo == "EDA":
       conteo_outliers = outliers.reset_index()
       conteo_outliers.columns = ["Variable", "Cantidad de outliers"]
       st.dataframe(conteo_outliers)
+        
     with tab4:
       st.subheader("Ítem 4: Valores faltantes")
       st.write("En este apartado se identifican los valores faltantes del dataset y se muestra su porcentaje por variable.")
@@ -129,5 +132,18 @@ elif modulo == "EDA":
           st.success("El dataset no presenta valores faltantes.")
       else:
           st.warning("El dataset presenta valores faltantes que deben ser revisados.")
-    
+
+    with tab5:
+      st.subheader("Ítem 5: Distribución de variables numéricas")
+      st.write("En este apartado se observa la distribución de las variables numéricas mediante histogramas.")
+      variables_numericas = df.select_dtypes(include="number").columns
+      variable = st.selectbox("Seleccione una variable:",variables_numericas)
+      fig, ax = plt.subplots()
+      sns.histplot(df[variable], bins=10, kde=True, ax=ax)
+      ax.set_title("Distribución de " + variable)
+      ax.set_xlabel(variable)
+      ax.set_ylabel("Frecuencia")
+      st.pyplot(fig)
+
+
     
