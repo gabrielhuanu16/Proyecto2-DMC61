@@ -220,22 +220,22 @@ elif modulo == "EDA":
           "stress_level",
           "anxiety_level",
           "addiction_level"
-     ]
-    variable = st.selectbox("Seleccione una variable para analizar:",variables_numericas)
-    mostrar_datos = st.checkbox("Mostrar datos filtrados",value=True)
-    df_filtrado = df[(df["age"] >= edad[0]) &(df["age"] <= edad[1]) &(df["gender"].isin(generos)) &(df["platform_usage"].isin(plataformas))]
-    st.write("**Cantidad de registros:**")
-    st.write(len(df_filtrado))
-    if mostrar_datos:
+      ]
+     variable = st.selectbox("Seleccione una variable para analizar:",variables_numericas)
+     mostrar_datos = st.checkbox("Mostrar datos filtrados",value=True)
+     df_filtrado = df[(df["age"] >= edad[0]) &(df["age"] <= edad[1]) &(df["gender"].isin(generos)) &(df["platform_usage"].isin(plataformas))]
+     st.write("**Cantidad de registros:**")
+     st.write(len(df_filtrado))
+     if mostrar_datos:
         st.write("**Datos filtrados:**")
         st.dataframe(df_filtrado)
-    st.write("**Gráfico de la variable seleccionada:**")
-    fig, ax = plt.subplots()
-    sns.histplot(df_filtrado[variable], bins=10, kde=True, ax=ax)
-    ax.set_title("Distribución de " + variable)
-    ax.set_xlabel(variable)
-    ax.set_ylabel("Frecuencia")
-    st.pyplot(fig)
+     st.write("**Gráfico de la variable seleccionada:**")
+     fig, ax = plt.subplots()
+     sns.histplot(df_filtrado[variable], bins=10, kde=True, ax=ax)
+     ax.set_title("Distribución de " + variable)
+     ax.set_xlabel(variable)
+     ax.set_ylabel("Frecuencia")
+     st.pyplot(fig)
         
     with tab10:
       st.subheader("Ítem 10: Hallazgos clave")
