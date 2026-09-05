@@ -159,8 +159,18 @@ elif modulo == "EDA":
 
     with tab7:
       st.subheader("Ítem 7: Numérico vs categórico")
-      st.write("En este apartado se comparan variables numéricas según las categorías de depression_label.")
-      variables_numericas = df.select_dtypes(include="number").columns
+      st.write("En este apartado se comparan variables numéricas según la etiqueta depression_label.")
+      variables_numericas = [
+          "age",
+          "daily_social_media_hours",
+          "sleep_hours",
+          "screen_time_before_sleep",
+          "academic_performance",
+          "physical_activity",
+          "stress_level",
+          "anxiety_level",
+          "addiction_level"
+      ]
       variable = st.selectbox("Seleccione una variable numérica:",variables_numericas)
       st.write("**Comparación de", variable, "según depression_label:**")
       fig, ax = plt.subplots()
