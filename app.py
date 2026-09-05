@@ -68,4 +68,13 @@ elif modulo == "EDA":
             "Análisis dinámico",
             "Hallazgos clave"])
       with tab1:
-          st.write("Aquí irá el Ítem 1")  
+          st.subheader("Ítem 1: Información general del dataset")
+          st.write("En este apartado se muestra información general sobre la estructura del dataset, los tipos de datos, los valores nulos y los registros duplicados.")
+          st.write("**Información general:**")
+          df.info()
+          st.write("**Tipos de datos:**")
+          st.write(df.dtypes)
+          st.write("**Valores nulos:**")
+          st.write(df.isnull().sum())
+          st.write("**Registros duplicados:**")
+          st.write(df.duplicated().sum())
