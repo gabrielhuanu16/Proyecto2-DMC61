@@ -50,5 +50,4 @@ elif modulo == "Carga del Dataset":
     st.warning("Debe cargar el archivo CSV")
 elif modulo == "EDA":
   tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs(["Información general","Clasificación","Estadísticas","Valores faltantes","Distribuciones","Variables categóricas","Numérico vs categórico","Categórico vs categórico","Análisis dinámico","Hallazgos clave"])
-  with tab1:
     
