@@ -4,6 +4,12 @@ import pandas as pd
 st.sidebar.title("Secciones")
 st.sidebar.image("DMC_logo.png", width=100)
 modulo = st.sidebar.selectbox("Seleccione un módulo", ["Home", "Carga del Dataset", "EDA"])
+
+def clasificar_variables(df):
+    variables_numericas = df.select_dtypes(include="number").columns
+    variables_categoricas = df.select_dtypes(include="object").columns
+    return variables_numericas, variables_categoricas
+
 if modulo == "Home":
   st.title("Modulo 2 - Análisis Exploratorio de Datos sobre Salud Mental en Adolescentes")
   st.image("gabriel_logo.png", width=200)
@@ -55,30 +61,42 @@ elif modulo == "EDA":
   st.title("EDA")
   st.divider()
   if "df" not in st.session_state:
-      st.warning("Primero debe cargar el dataset.")
+    st.warning("Primero debe cargar el dataset.")
   else:
-      df = st.session_state.df
-      tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs([
-            "Información general",
-            "Clasificación",
-            "Estadísticas",
-            "Valores faltantes",
-            "Distribuciones",
-            "Variables categóricas",
-            "Numérico vs categórico",
-            "Categórico vs categórico",
-            "Análisis dinámico",
-            "Hallazgos clave"])
-      with tab1:
-          st.subheader("Ítem 1: Información general del dataset")
-          st.write("En este apartado se muestra información general sobre la estructura del dataset, los tipos de datos, los valores nulos y los registros duplicados.")
-          st.write("**Información general:**")
-          df.info()
-          st.write("**Tipos de datos:**")
-          tipos = pd.DataFrame({"Tipo de dato": df.dtypes.astype(str)})
-          st.dataframe(tipos)
-          st.write("**Valores nulos:**")
-          nulos = pd.DataFrame({"Valores nulos": df.isnull().sum()})
-          st.dataframe(nulos)
-          st.write("**Registros duplicados:**")
-          st.write(df.duplicated().sum())
+    df = st.session_state.df
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs([
+          "Información general",
+          "Clasificación",
+          "Estadísticas",
+          "Valores faltantes",
+          "Distribuciones",
+          "Variables categóricas",
+          "Numérico vs categórico",
+          "Categórico vs categórico",
+          "Análisis dinámico",
+          "Hallazgos clave"])
+    
+    with tab1:
+      st.subheader("Ítem 1: Información general del dataset")
+      st.write("En este apartado se muestra información general sobre la estructura del dataset, los tipos de datos, los valores nulos y los registros duplicados.")
+      st.write("**Información general:**")
+      df.info()
+      st.write("**Tipos de datos:**")
+      tipos = pd.DataFrame({"Tipo de dato": df.dtypes.astype(str)})
+      st.dataframe(tipos)
+      st.write("**Valores nulos:**")
+      nulos = pd.DataFrame({"Valores nulos": df.isnull().sum()})
+      st.dataframe(nulos)
+      st.write("**Registros duplicados:**")
+      st.write(df.duplicated().sum())
+  
+    with tab2:
+      st.subheader("Ítem 2: Clasificación de variables")
+      st.write("En este apartado se clasifican las variables del dataset en numéricas y categóricas.")
+      tipos_variables = df.dtypes.astype(str).reset_index()
+      tipos_variables.columns = ["Variable", "Tipo"]
+      conteo_tipos = tipos_variables["Tipo"].value_counts().reset_index()
+      conteo_tipos.columns = ["Tipo de variable", "Cantidad"]
+      st.dataframe(tipos_variables)
+      st.write("**Cantidad de variables por tipo:**")
+      st.dataframe(conteo_tipos)  
