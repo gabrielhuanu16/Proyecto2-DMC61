@@ -164,6 +164,7 @@ elif modulo == "EDA":
       variable = st.selectbox("Seleccione una variable categórica:",variables_categoricas)
       conteo = df[variable].value_counts().reset_index()
       conteo.columns = ["Categoría", "Cantidad"]
+      conteo["Porcentaje (%)"] = (conteo["Cantidad"] / len(df) * 100).round(2)
       st.write("**Frecuencia de las categorías:**")
       st.dataframe(conteo)
       st.write("**Gráfico de frecuencias:**")
@@ -240,18 +241,32 @@ elif modulo == "EDA":
     with tab10:
       st.subheader("Ítem 10: Hallazgos clave")
       st.write("En este apartado se presentan los principales hallazgos obtenidos durante el análisis exploratorio del dataset.")
-      st.write("**1. Uso de redes sociales**")
       promedio_redes = df["daily_social_media_hours"].mean()
-      st.write(f"El promedio de uso diario de redes sociales es de {promedio_redes:.2f} horas.")
-      st.write("**2. Horas de sueño**")
       promedio_sueno = df["sleep_hours"].mean()
-      st.write(f"El promedio de horas de sueño es de {promedio_sueno:.2f} horas por día.")
-      st.write("**3. Rendimiento académico**")
       promedio_academico = df["academic_performance"].mean()
-      st.write( f"El promedio del rendimiento académico es de {promedio_academico:.2f}.")
-      st.write("**4. Nivel de estrés**")
       promedio_estres = df["stress_level"].mean()
-      st.write( f"El nivel promedio de estrés registrado es de {promedio_estres:.2f} sobre 10.")
-      st.write("**5. Plataforma más utilizada**")
       plataforma_mas_usada = df["platform_usage"].value_counts().idxmax()
-      st.write( f"La plataforma o combinación de plataformas con mayor frecuencia es: {plataforma_mas_usada}.")
+      st.write("**1. Uso de redes sociales**")
+      st.write(f"El promedio de uso diario de redes sociales es de {promedio_redes:.2f} horas. Este resultado permite observar el nivel de exposición diaria a las redes sociales dentro del grupo analizado.")
+      st.write("**2. Horas de sueño**")
+      st.write(f"El promedio de horas de sueño es de {promedio_sueno:.2f} horas por día. Esta medida permite conocer el comportamiento general del descanso de los adolescentes.")
+      st.write("**3. Rendimiento académico**")
+      st.write(f"El promedio del rendimiento académico es de {promedio_academico:.2f}. Este valor permite observar el nivel académico promedio registrado en el dataset.")
+      st.write("**4. Nivel de estrés**")
+      st.write(f"El nivel promedio de estrés registrado es de {promedio_estres:.2f} sobre 10. Este resultado permite identificar el nivel promedio de estrés observado en los registros.")
+      st.write("**5. Plataforma más utilizada**")
+      st.write(f"La plataforma o combinación de plataformas con mayor frecuencia es: {plataforma_mas_usada}. Esto muestra cuál es la categoría de plataforma con mayor presencia en el dataset.")
+      st.write("**Visualización resumen:**")
+      datos_resumen = pd.DataFrame({"Indicador": [
+              "Uso de redes sociales",
+              "Horas de sueño",
+              "Rendimiento académico",
+              "Nivel de estrés"
+          ],"Promedio": [
+              promedio_redes,
+              promedio_sueno,
+              promedio_academico,
+              promedio_estres
+          ]
+      })
+      st.bar_chart(datos_resumen.set_index("Indicador"))
