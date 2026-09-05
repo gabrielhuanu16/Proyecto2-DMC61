@@ -178,6 +178,17 @@ elif modulo == "EDA":
       ax.set_xlabel("Depression Label")
       ax.set_ylabel(variable)
       st.pyplot(fig)
-
+        
+    with tab8:
+      st.subheader("Ítem 8: Categórico vs categórico")
+      st.write("En este apartado se analizan las relaciones entre dos variables categóricas.")
+      variables_categoricas = df.select_dtypes(include="object").columns.tolist()
+      variable1 = st.selectbox("Seleccione la primera variable:",variables_categoricas)
+      variable2 = st.selectbox("Seleccione la segunda variable:",variables_categoricas)
+      tabla = pd.crosstab(df[variable1], df[variable2])
+      st.write("**Tabla de frecuencias:**")
+      st.dataframe(tabla)
+      st.write("**Gráfico de comparación:**")
+      st.bar_chart(tabla)
 
     
