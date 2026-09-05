@@ -190,5 +190,27 @@ elif modulo == "EDA":
       st.dataframe(tabla)
       st.write("**Gráfico de comparación:**")
       st.bar_chart(tabla)
-
+    with tab9:
+      st.subheader("Ítem 9: Análisis dinámico")
+      st.write("En este apartado el usuario puede seleccionar parámetros para realizar un análisis personalizado del dataset.")
+      edad = st.slider("Seleccione el rango de edad:",min_value=int(df["age"].min()),max_value=int(df["age"].max()),value=(int(df["age"].min()), int(df["age"].max())))
+      generos = st.multiselect("Seleccione el género:",df["gender"].unique(),default=df["gender"].unique())
+      variables_numericas = [
+        "daily_social_media_hours",
+        "sleep_hours",
+        "screen_time_before_sleep",
+        "academic_performance",
+        "physical_activity",
+        "stress_level",
+        "anxiety_level",
+        "addiction_level"
+      ]
+      variable = st.selectbox("Seleccione una variable para analizar:", variables_numericas)
+      df_filtrado = df[(df["age"] >= edad[0]) &(df["age"] <= edad[1]) &(df["gender"].isin(generos))]
+      st.write("**Datos filtrados:**")
+      st.dataframe(df_filtrado)
+      st.write("**Cantidad de registros:**")
+      st.write(len(df_filtrado))
+      st.write("**Gráfico de la variable seleccionada:**")
+      st.bar_chart(df_filtrado[variable].value_counts().sort_index())
     
