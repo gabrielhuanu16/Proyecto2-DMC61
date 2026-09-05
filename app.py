@@ -106,11 +106,12 @@ elif modulo == "EDA":
     with tab2:
       st.subheader("Ítem 2: Clasificación de variables")
       st.write("En este apartado se clasifican las variables del dataset en numéricas y categóricas.")
-      tipos_variables = df.dtypes.astype(str).reset_index()
-      tipos_variables.columns = ["Variable", "Tipo"]
-      conteo_tipos = tipos_variables["Tipo"].value_counts().reset_index()
-      conteo_tipos.columns = ["Tipo de variable", "Cantidad"]
-      st.dataframe(tipos_variables)
+      variables_numericas, variables_categoricas = clasificar_variables(df)
+      st.write("**Variables numéricas:**")
+      st.write(list(variables_numericas))
+      st.write("**Variables categóricas:**")
+      st.write(list(variables_categoricas))
+      conteo_tipos = pd.DataFrame({"Tipo de variable": ["Numéricas", "Categóricas"],"Cantidad": [len(variables_numericas), len(variables_categoricas)]})
       st.write("**Cantidad de variables por tipo:**")
       st.dataframe(conteo_tipos) 
         
@@ -193,8 +194,8 @@ elif modulo == "EDA":
     with tab8:
       st.subheader("Ítem 8: Categórico vs categórico")
       st.write("En este apartado se analizan las relaciones entre dos variables categóricas.")
-      variables_categoricas = df.select_dtypes(include="object").columns.tolist()
-      variable1 = st.selectbox("Seleccione la primera variable:",variables_categoricas)
+      variables_categoricas = ["gender","platform_usage","social_interaction_level","depression_label"]
+      variable1 = st.selectbox("Seleccione la primera variable:",variables_categoricas) 
       variable2 = st.selectbox("Seleccione la segunda variable:",variables_categoricas)
       tabla = pd.crosstab(df[variable1], df[variable2])
       st.write("**Tabla de frecuencias:**")
@@ -202,28 +203,39 @@ elif modulo == "EDA":
       st.write("**Gráfico de comparación:**")
       st.bar_chart(tabla)
     with tab9:
-      st.subheader("Ítem 9: Análisis dinámico")
-      st.write("En este apartado el usuario puede seleccionar parámetros para realizar un análisis personalizado del dataset.")
-      edad = st.slider("Seleccione el rango de edad:",min_value=int(df["age"].min()),max_value=int(df["age"].max()),value=(int(df["age"].min()), int(df["age"].max())))
-      generos = st.multiselect("Seleccione el género:",df["gender"].unique(),default=df["gender"].unique())
-      variables_numericas = [
-        "daily_social_media_hours",
-        "sleep_hours",
-        "screen_time_before_sleep",
-        "academic_performance",
-        "physical_activity",
-        "stress_level",
-        "anxiety_level",
-        "addiction_level"
-      ]
-      variable = st.selectbox("Seleccione una variable para analizar:", variables_numericas)
-      df_filtrado = df[(df["age"] >= edad[0]) &(df["age"] <= edad[1]) &(df["gender"].isin(generos))]
-      st.write("**Datos filtrados:**")
-      st.dataframe(df_filtrado)
-      st.write("**Cantidad de registros:**")
-      st.write(len(df_filtrado))
-      st.write("**Gráfico de la variable seleccionada:**")
-      st.bar_chart(df_filtrado[variable].value_counts().sort_index())
+     st.subheader("Ítem 9: Análisis dinámico")
+     st.write("En este apartado el usuario puede seleccionar parámetros para realizar un análisis personalizado del dataset.")
+     col1, col2 = st.columns(2)
+     with col1:
+       edad = st.slider("Seleccione el rango de edad:", min_value=int(df["age"].min()),max_value=int(df["age"].max()),value=(int(df["age"].min()), int(df["age"].max())))
+     with col2:
+       generos = st.multiselect( "Seleccione el género:",df["gender"].unique(),default=df["gender"].unique())
+     plataformas = st.multiselect("Seleccione la plataforma:", df["platform_usage"].unique(),default=df["platform_usage"].unique())
+     variables_numericas = [
+          "daily_social_media_hours",
+          "sleep_hours",
+          "screen_time_before_sleep",
+          "academic_performance",
+          "physical_activity",
+          "stress_level",
+          "anxiety_level",
+          "addiction_level"
+     ]
+    variable = st.selectbox("Seleccione una variable para analizar:",variables_numericas)
+    mostrar_datos = st.checkbox("Mostrar datos filtrados",value=True)
+    df_filtrado = df[(df["age"] >= edad[0]) &(df["age"] <= edad[1]) &(df["gender"].isin(generos)) &(df["platform_usage"].isin(plataformas))]
+    st.write("**Cantidad de registros:**")
+    st.write(len(df_filtrado))
+    if mostrar_datos:
+        st.write("**Datos filtrados:**")
+        st.dataframe(df_filtrado)
+    st.write("**Gráfico de la variable seleccionada:**")
+    fig, ax = plt.subplots()
+    sns.histplot(df_filtrado[variable], bins=10, kde=True, ax=ax)
+    ax.set_title("Distribución de " + variable)
+    ax.set_xlabel(variable)
+    ax.set_ylabel("Frecuencia")
+    st.pyplot(fig)
         
     with tab10:
       st.subheader("Ítem 10: Hallazgos clave")
