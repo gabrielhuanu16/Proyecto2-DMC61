@@ -106,17 +106,19 @@ elif modulo == "EDA":
       st.write("**Registros duplicados:**")
       st.write(analizador.duplicados())
           
-    with tab2:
+  with tab2:
       st.subheader("Ítem 2: Clasificación de variables")
       st.write("En este apartado se clasifican las variables del dataset en numéricas y categóricas.")
       variables_numericas, variables_categoricas = clasificar_variables(df)
       st.write("**Variables numéricas:**")
-      st.write(list(variables_numericas))
+      tabla_numericas = pd.DataFrame({"Variable": variables_numericas})
+      st.dataframe(tabla_numericas, hide_index=True)
       st.write("**Variables categóricas:**")
-      st.write(list(variables_categoricas))
+      tabla_categoricas = pd.DataFrame({"Variable": variables_categoricas})
+      st.dataframe(tabla_categoricas, hide_index=True)
       conteo_tipos = pd.DataFrame({"Tipo de variable": ["Numéricas", "Categóricas"],"Cantidad": [len(variables_numericas), len(variables_categoricas)]})
       st.write("**Cantidad de variables por tipo:**")
-      st.dataframe(conteo_tipos) 
+      st.dataframe(conteo_tipos, hide_index=True)
         
     with tab3:
       st.subheader("Ítem 3: Estadísticas descriptivas")
